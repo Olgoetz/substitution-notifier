@@ -29,7 +29,7 @@ def validate_email(ctx, param, value):
               help="Recipient of the email",
               type=str,
               callback=validate_email,
-              default="ADJUST HERE!")
+              default=os.environ["SUBSTITUTION_NOTIFIER_RECIPIENT"])
 @click.option('--debug', is_flag=True, help="Switch on/off debug mode")
 @click.option('--dryrun',
               is_flag=True,
@@ -108,8 +108,7 @@ def cli(date, name, copy, location, recipient, dryrun, debug):
         click.echo("Dry run. No mail sent.")
         return
 
-    click.echo('Sending mail...')
     gmail.send_message("me", recipient, f'[Vertretung]: {location} | {date}',
                        emailContent, emailContent['copy'])
 
-    click.echo('Email sent!')
+    click.echo(f'Email sent to {recipient} and {copy}!')
