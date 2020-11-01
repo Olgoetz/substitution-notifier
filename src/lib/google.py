@@ -2,7 +2,6 @@ import logging
 import sys
 import pickle
 import os.path
-import configparser
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -20,11 +19,8 @@ class GoogleSuiteFactory():
         self.version = version
         self.SCOPES = SCOPES
 
-        logging.basicConfig(
-            level=f'logging.{os.getenv("SUBSTITUTION_NOTIFIER_LOG").upper()}')
-
         self.logger = logging.getLogger(__name__)
-        print(projectPath)
+
         try:
             self.logger.info('Starting authentication with GoogleService...')
             self.credentials = self._authenticate()
@@ -44,30 +40,35 @@ class GoogleSuiteFactory():
         # created automatically when the authorization flow completes for the first
         # time.
 
-        if os.path.exists(os.path.join("lib", 'token.pickle')):
+        if os.path.exists(
+                os.path.join(os.path.dirname(__file__), 'token.pickle')):
             self.logger.info('Token file found!')
-            with open(os.path.join("lib", 'token.pickle'), 'rb') as token:
+            with open(os.path.join(os.path.dirname(__file__), 'token.pickle'),
+                      'rb') as token:
                 creds = pickle.load(token)
-        # If there are no (valid) credentials available, let the user log in.
 
+        # If there are no (valid) credentials available, let the user log in.
         if not creds or not creds.valid:
             self.logger.info('Creating new credentials!')
             if creds and creds.expired and creds.refresh_token:
 
                 creds.refresh(Request())
             else:
-                credFile = os.path.join("creds", "credentials.json")
+                credFile = os.path.join(os.path.dirname(__file__), "creds",
+                                        "credentials.json")
                 print(credFile)
                 flow = InstalledAppFlow.from_client_secrets_file(
                     credFile, self.SCOPES)
                 creds = flow.run_local_server(port=0)
             # Save the credentials for the next run
-            with open(os.path.join("lib", 'token.pickle'), 'wb') as token:
+            with open(os.path.join(os.path.dirname(__file__), 'token.pickle'),
+                      'wb') as token:
                 pickle.dump(creds, token)
 
         return creds
 
     def buildService(self):
+        self.logger.debug("Building the service...")
         try:
             self.service = build(self.googleApp,
                                  self.version,
@@ -84,9 +85,9 @@ class GmailService(GoogleSuiteFactory):
         super().__init__(googleApp, version, SCOPES)
 
     def _render_template(self, emailContent):
-
+        self.logger.debug("Rendering the template...")
         env = Environment(loader=FileSystemLoader(
-            searchpath=os.path.join("lib", 'templates')))
+            searchpath=os.path.join(os.path.dirname(__file__), 'templates')))
 
         template = env.get_template('mail.html')
 
@@ -112,6 +113,7 @@ class GmailService(GoogleSuiteFactory):
         An object containing a base64url encoded email object.
         """
 
+        self.logger.debug("Creating the message...")
         message = MIMEMultipart('alternative')
         if bcc is None:
             val_bcc = None
@@ -148,6 +150,7 @@ class GmailService(GoogleSuiteFactory):
         Sent Message.
         """
 
+        self.logger.debug("Sending the message...")
         message_body = self._render_template(emailContent)
         message = self._create_message(sender, to, subject, message_body, cc,
                                        bcc)
