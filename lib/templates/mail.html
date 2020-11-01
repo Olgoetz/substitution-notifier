@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vertretung</title>
+  </head>
+  <body
+    style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;"
+  >
+    <h1>Hi Juli,</h1>
+
+    {% if emailContent.classes|length > 1 %}
+    <p style="padding-top: 20px">Folgende Kurse übernimmt 
+      <span style="color:blue">
+          {{emailContent.name}}
+      </span> 
+    
+    {% else %}
+    <p style="padding-top: 20px">Folgenden Kurs übernimmt 
+      <span style="color:blue">
+          {{emailContent.name}}
+      </span> 
+    {% endif %}
+
+      
+    auf der <span style="font-style: italic;">{{emailContent.location}} am {{emailContent.date}} </span>:</p>
+
+    <br />
+
+    <table style="width:60%; text-align: left; font-size: 12px">
+      <tr>
+        <th>Kurs</th>
+        <th>Zeit</th>
+      </tr>
+
+      {% for item in emailContent.classes %}
+      <tr>
+        <td>{{item.name}}</td>
+        <td>{{item.time}}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <br />
+    <p>Viele Grüße,</p>
+    <p>Oli</p>
+  </body>
+</html>
