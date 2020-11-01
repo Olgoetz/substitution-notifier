@@ -47,10 +47,10 @@ def validate_email(ctx, param, value):
               type=str)
 @click.argument('date', type=str)
 def cli(date, name, copy, location, recipient, dryrun, debug):
-    click.echo("Starting the process...")
     f = Figlet(font='slant')
     print(f.renderText('Substitutor Notifier CLI'))
 
+    click.echo("WELCOME!")
     # Decide on the log level
     os.environ["SUBSTITUTION_NOTIFIER_LOG"] = "INFO"
     if debug:

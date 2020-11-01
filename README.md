@@ -8,8 +8,12 @@ As a groupfitness instructor I teach a couple of classes per week such as Hot Ir
 
 ### Formerly:
 
-Open mail program --> Add recipient (groupfitness supvervisor) --> Add cc (subervisor) --> State subject --> Write email content --> Send email
+Open mail program --> Add recipient (groupfitness supvervisor) --> Add cc (supervisor) --> State subject --> Write email content --> Send email
 
 ### Now:
 
 Open cli --> Write `$ substitutor-notifier ...` --> Email being sent automatically
+
+## Screenshots
+
+![](assets/screenshot.png)
