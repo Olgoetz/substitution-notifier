@@ -17,6 +17,7 @@ Open cli --> Write `$ substitutor-notifier ...` --> Email being sent automatical
 ## Requirements
 
 - Python >= 3.8
+- Adjust `src/lib/config_template.py`-file with your value and rename it to `config.py`
 - `src/lib/creds/credentials.json`-file after activating the Gmail API (https://developers.google.com/gmail/api/quickstart/python)
 
 ## Screenshot
