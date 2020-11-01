@@ -14,6 +14,6 @@ Open mail program --> Add recipient (groupfitness supvervisor) --> Add cc (super
 
 Open cli --> Write `$ substitutor-notifier ...` --> Email being sent automatically
 
-## Screenshots
+## Screenshot
 
 ![](assets/screenshot.png)
