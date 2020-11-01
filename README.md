@@ -14,6 +14,11 @@ Open mail program --> Add recipient (groupfitness supvervisor) --> Add cc (super
 
 Open cli --> Write `$ substitutor-notifier ...` --> Email being sent automatically
 
+## Requirements
+
+- Python >= 3.8
+- `src/lib/creds/credentials.json`-file after activating the Gmail API (https://developers.google.com/gmail/api/quickstart/python)
+
 ## Screenshot
 
 ![](assets/screenshot.png)
