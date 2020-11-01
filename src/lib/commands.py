@@ -46,8 +46,8 @@ def validate_email(ctx, param, value):
               required=True,
               type=str)
 @click.argument('date', type=str)
-def cli(name, date, copy, location, recipient, dryrun, debug):
-
+def cli(date, name, copy, location, recipient, dryrun, debug):
+    click.echo("Starting the process...")
     f = Figlet(font='slant')
     print(f.renderText('Substitutor Notifier CLI'))
 
