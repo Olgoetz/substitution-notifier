@@ -29,7 +29,7 @@ def validate_email(ctx, param, value):
               help="Recipient of the email",
               type=str,
               callback=validate_email,
-              default="oliver.goetz@iron-system.com")
+              default="ADJUST HERE!")
 @click.option('--debug', is_flag=True, help="Switch on/off debug mode")
 @click.option('--dryrun',
               is_flag=True,
